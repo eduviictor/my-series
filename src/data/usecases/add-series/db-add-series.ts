@@ -1,9 +1,6 @@
-import { SeriesModel } from '../../../../domain/models/series';
-import {
-  AddSeries,
-  AddSeriesModel,
-} from '../../../../domain/usecases/add-series';
-import { AddSeriesRepository } from '../../add-series-repository';
+import { SeriesModel } from '../../../domain/models/series';
+import { AddSeries, AddSeriesModel } from '../../../domain/usecases/add-series';
+import { AddSeriesRepository } from '../../contracts/add-series-repository';
 
 export class DbAddSeries implements AddSeries {
   constructor(private readonly addSeriesRepository: AddSeriesRepository) {}

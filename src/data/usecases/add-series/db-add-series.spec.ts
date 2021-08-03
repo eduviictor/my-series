@@ -1,6 +1,6 @@
-import { SeriesModel } from '../../../../domain/models/series';
-import { AddSeriesModel } from '../../../../domain/usecases/add-series';
-import { AddSeriesRepository } from '../../add-series-repository';
+import { SeriesModel } from '../../../domain/models/series';
+import { AddSeriesModel } from '../../../domain/usecases/add-series';
+import { AddSeriesRepository } from '../../contracts/add-series-repository';
 import { DbAddSeries } from './db-add-series';
 
 const makeAddSeriesRepository = (): AddSeriesRepository => {

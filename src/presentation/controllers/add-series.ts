@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse } from '../contracts/http';
 import { MissingParamError } from '../errors/missing-param-error';
 import { InvalidParamError } from '../errors/invalid-param-error';
 
-import { badRequest, serverError } from '../helpers/http';
+import { badRequest, serverError, ok } from '../helpers/http';
 import { AddSeries } from '../../domain/usecases/add-series';
 
 export class AddSeriesController implements Controller {
@@ -31,10 +31,7 @@ export class AddSeriesController implements Controller {
         score,
       });
 
-      return {
-        statusCode: 200,
-        body: {},
-      };
+      return ok(resultSeries);
     } catch (error) {
       console.error(error);
       return serverError();

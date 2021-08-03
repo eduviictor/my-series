@@ -17,6 +17,8 @@
     "prettier.config.js",
     "commitlint.config.js",
     "jest-unit-config.js",
-    "jest-mongodb-config.js"
+    "jest-mongodb-config.js",
+    "jest-integration-config.js",
+    "./dist"
   ]
 }

@@ -2,6 +2,7 @@ import { SeriesModel } from '../../domain/models/series';
 import { AddSeries, AddSeriesModel } from '../../domain/usecases/add-series';
 import { InvalidParamError } from '../errors/invalid-param-error';
 import { MissingParamError } from '../errors/missing-param-error';
+import { ServerError } from '../errors/server-error';
 import { AddSeriesController } from './add-series';
 
 const makeAddSeries = (): AddSeries => {
@@ -40,7 +41,7 @@ describe('AddSeries Controller', () => {
     const httpRequest = {
       body: {},
     };
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('name'));
   });
@@ -52,7 +53,7 @@ describe('AddSeries Controller', () => {
         name: 'any_name',
       },
     };
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('description'));
   });
@@ -65,7 +66,7 @@ describe('AddSeries Controller', () => {
         description: 'any_description',
       },
     };
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('score'));
   });
@@ -79,7 +80,7 @@ describe('AddSeries Controller', () => {
         score: 'score_string',
       },
     };
-    const httpResponse = sut.handle(httpRequest);
+    const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new InvalidParamError('score'));
   });
@@ -100,5 +101,23 @@ describe('AddSeries Controller', () => {
       description: 'any_description',
       score: 10,
     });
+  });
+
+  test('Should return 500 if AddSeries throws', async () => {
+    const { sut, addSeriesStub } = makeSut();
+    jest.spyOn(addSeriesStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()));
+    });
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        description: 'any_description',
+        score: 10,
+      },
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    console.log(httpResponse);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 });

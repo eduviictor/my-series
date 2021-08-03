@@ -52,4 +52,21 @@ describe('DbAddSeries Usecase', () => {
       score: 10,
     });
   });
+
+  test('Should throw if AddSeriesRepository throws', async () => {
+    const { sut, addSeriesRepositoryStub } = makeSut();
+    jest
+      .spyOn(addSeriesRepositoryStub, 'add')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      );
+    const seriesData = {
+      name: 'valid_name',
+      description: 'valid_description',
+      score: 10,
+    };
+    const promise = sut.add(seriesData);
+
+    await expect(promise).rejects.toThrow();
+  });
 });

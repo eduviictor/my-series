@@ -22,4 +22,16 @@ describe('AddSeries Controller', () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('name'));
   });
+
+  test('Should return 400 if no description is provided', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError('description'));
+  });
 });

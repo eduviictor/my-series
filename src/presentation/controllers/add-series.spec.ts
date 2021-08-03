@@ -1,3 +1,4 @@
+import { InvalidParamError } from '../errors/invalid-param-error';
 import { MissingParamError } from '../errors/missing-param-error';
 import { AddSeriesController } from './add-series';
 
@@ -46,5 +47,19 @@ describe('AddSeries Controller', () => {
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError('score'));
+  });
+
+  test('Should return 400 if score is not integer', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        description: 'any_description',
+        score: 'score_string',
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError('score'));
   });
 });

@@ -27,8 +27,11 @@
     "build": "tsc",
     "dev": "ts-node-dev --ignore-watch node_modules src/main/server.ts",
     "postinstall": "husky install",
-    "test": "jest --passWithNoTests --runInBand --no-cache",
-    "test:staged": "yarn test -- --findRelatedTests src/",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "yarn test -- --watch -c jest-unit-config.js",
+    "test:integration": "yarn test -- --watch -c jest-integration-config.js",
+    "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test -- --coverage"
   }
 }

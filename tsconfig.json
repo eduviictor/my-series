@@ -14,6 +14,8 @@
     "coverage",
     "node_modules",
     "jest.config.js",
-    "prettier.config.js"
+    "prettier.config.js",
+    "commitlint.config.js",
+    "jest-unit-config.js"
   ]
 }

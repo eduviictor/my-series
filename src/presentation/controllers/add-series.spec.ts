@@ -116,7 +116,6 @@ describe('AddSeries Controller', () => {
       },
     };
     const httpResponse = await sut.handle(httpRequest);
-    console.log(httpResponse);
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
   });

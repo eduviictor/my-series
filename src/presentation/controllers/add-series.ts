@@ -4,8 +4,11 @@ import { MissingParamError } from '../errors/missing-param-error';
 import { InvalidParamError } from '../errors/invalid-param-error';
 
 import { badRequest } from '../helpers/http';
+import { AddSeries } from '../../domain/usecases/add-series';
 
 export class AddSeriesController implements Controller {
+  constructor(private readonly addSeries: AddSeries) {}
+
   handle(httpRequest: HttpRequest): HttpResponse {
     const requiredFields = ['name', 'description', 'score'];
 
@@ -15,11 +18,17 @@ export class AddSeriesController implements Controller {
       }
     }
 
-    const { score } = httpRequest.body;
+    const { name, description, score } = httpRequest.body;
 
     if (typeof score !== 'number') {
       return badRequest(new InvalidParamError('score'));
     }
+
+    const resultSeries = this.addSeries.add({
+      name,
+      description,
+      score,
+    });
 
     return {
       statusCode: 200,

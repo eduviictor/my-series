@@ -5,7 +5,7 @@ import { badRequest } from '../helpers/http';
 
 export class AddSeriesController implements Controller {
   handle(httpRequest: HttpRequest): HttpResponse {
-    const requiredFields = ['name', 'description'];
+    const requiredFields = ['name', 'description', 'score'];
 
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {

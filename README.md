@@ -12,3 +12,4 @@
 5. Para rodar todos os testes e verificar a cobertura de testes: `yarn test:ci`.
 6. Para rodar o projeto utilize o comando: `cp .env.example .env` e insira as variáveis de ambiente.
 7. Após isso rode o comando: `docker-compose up -d --build` e é só entrar em [**localhost**](http://localhost:3000).
+8. Após rodar o projeto acesse: [**Documentação**](http://localhost:3000/docs)

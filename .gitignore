@@ -8,6 +8,7 @@ node_modules/
 dist/
 coverage/
 globalConfig.json
+.env
 
 # Compiled Java class files
 *.class

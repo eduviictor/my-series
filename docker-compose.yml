@@ -1,0 +1,30 @@
+version: '3.0'
+
+volumes:
+  mongodata:
+
+services:
+  mongo:
+    container_name: mongo-container
+    volumes:
+      - mongodata:/data/db
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+  app:
+    container_name: app
+    image: node:12
+    working_dir: /usr/src/my-series
+    restart: always
+    command: bash -c "yarn --only=prod && yarn start"
+    environment:
+      MONGO_URL: ${MONGO_URL}
+    volumes:
+      - ./dist/:/usr/src/my-series/dist/
+      - ./package.json:/usr/src/my-series/package.json
+      - ./tsconfig.json:/usr/src/my-series/tsconfig.json
+    ports:
+      - '3000:3000'
+    links:
+      - mongo
